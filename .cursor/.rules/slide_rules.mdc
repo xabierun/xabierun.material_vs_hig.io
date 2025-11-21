@@ -13,3 +13,9 @@
 - TextStyleはMaterialTextStyles.dart or HIGTextStyles.dartを参照
 - 共通Widgetは/material/widgets or /hig/widgetsを参照
 - Liquid GlassのUIはliquid_glass_rendererを使用
+- スライドごとにファイルを分割
+
+## Widgetの作成時のルール
+- Widgetは/material/widgets or /hig/widgetsを参照
+- Liquid GlassのWidgetはliquid_glass_rendererを使用
+- Widgetは50行程度で分割
