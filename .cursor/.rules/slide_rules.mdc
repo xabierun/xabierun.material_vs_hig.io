@@ -12,3 +12,4 @@
 - ColorはMaterialColors.dart or HIGColors.dartを参照
 - TextStyleはMaterialTextStyles.dart or HIGTextStyles.dartを参照
 - 共通Widgetは/material/widgets or /hig/widgetsを参照
+- Liquid GlassのUIはliquid_glass_rendererを使用
