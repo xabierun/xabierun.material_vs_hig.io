@@ -1,65 +1,121 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_deck/flutter_deck.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    FlutterDeckApp(
+      configuration: const FlutterDeckConfiguration(
+        // title: 'Material Design 3 Expressive vs HIG Liquid Glass',
+      ),
+      slides: [const _TitleSlide()],
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _TitleSlide extends StatelessWidget {
+  const _TitleSlide();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+    final textTheme = Theme.of(context).textTheme;
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(48.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
+          children: [
+            // Material Design 3 Expressive
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Material Design 3',
+                  style: textTheme.displayLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Expressive',
+                  style: textTheme.displayMedium?.copyWith(
+                    fontWeight: FontWeight.w300,
+                    color: Colors.deepPurple.shade300,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 64),
+            // VS
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(width: 4, height: 80, color: Colors.deepPurple),
+                const SizedBox(width: 24),
+                Text(
+                  'vs',
+                  style: textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(width: 24),
+                Container(width: 4, height: 80, color: Colors.blue),
+              ],
+            ),
+            const SizedBox(height: 64),
+            // HIG Liquid Glass
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'HIG',
+                  style: textTheme.displayLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Liquid Glass',
+                  style: textTheme.displayMedium?.copyWith(
+                    fontWeight: FontWeight.w300,
+                    color: Colors.blue.shade300,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 80),
+            // Subtitle
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              'デザインシステムの比較',
+              style: textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 48),
+            // Comparison Points
+            Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '比較ポイント',
+                    style: textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

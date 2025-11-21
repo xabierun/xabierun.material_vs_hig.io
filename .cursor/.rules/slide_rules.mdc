@@ -1,0 +1,14 @@
+# 概要
+社内でのエンジニア・デザイナー向けのLT資料を作成するためのルールです。
+5分程度のLTを想定しており、タイトル、比較ページ、それぞれの詳細説明、実際の動きとデザインを見せるページを作成
+
+## ルール
+- Material Design 3 expressiveness と HIG(Liquid Glass) の比較を行います。
+- Material Designの説明をするときのuiはMaterial Designを踏襲
+- HIGの説明をするときのuiはLiquid Glassを踏襲
+- 同じスライド内にMaterial DesignとHIGの両方を使用する場合は、それぞれのUIを混在させる
+
+## スライドの作成時のルール
+- ColorはMaterialColors.dart or HIGColors.dartを参照
+- TextStyleはMaterialTextStyles.dart or HIGTextStyles.dartを参照
+- 共通Widgetは/material/widgets or /hig/widgetsを参照
