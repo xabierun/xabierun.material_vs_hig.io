@@ -18,4 +18,6 @@
 ## Widgetの作成時のルール
 - Widgetは/material/widgets or /hig/widgetsを参照
 - Liquid GlassのWidgetはliquid_glass_rendererを使用
+    - ただしナビゲーション部分にしか使用しない
+    - それ以外の部分はできる限りCupertinoを使用
 - Widgetは50行程度で分割
