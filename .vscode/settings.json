@@ -1,0 +1,24 @@
+{
+  "debug.openDebug": "openOnDebugBreak",
+
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "matchingDocuments"
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": true,
+  "explorer.fileNesting.patterns": {
+    "*.dart": "$(capture).freezed.dart, $(capture).g.dart"
+  },
+  "dart.flutterSdkPath": "~/.asdf/installs/flutter/3.35.5-stable",
+  "java.configuration.updateBuildConfiguration": "interactive"
+}
