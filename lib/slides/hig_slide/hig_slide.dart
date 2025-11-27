@@ -47,7 +47,6 @@ class _SlideBody extends StatelessWidget {
               settings: const LiquidGlassSettings(
                 blur: 20,
                 glassColor: Color(0x40FFFFFF),
-                thickness: 20,
               ),
               child: LiquidGlass(
                 shape: const LiquidRoundedRectangle(
@@ -115,7 +114,6 @@ class _SlideBody extends StatelessWidget {
                       settings: const LiquidGlassSettings(
                         blur: 30,
                         glassColor: Color(0x66FFFFFF),
-                        thickness: 20,
                         lightIntensity: 0.8,
                       ),
                       child: LiquidGlass(
@@ -141,7 +139,7 @@ class _SlideBody extends StatelessWidget {
                     ),
                     const SizedBox(height: HIGSpacing.s48),
                     // ポイント
-                    Expanded(
+                    const Expanded(
                       child: _InteractiveCardsArea(),
                     ),
                   ],
@@ -165,8 +163,8 @@ class _InteractiveCardsArea extends StatefulWidget {
 class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
   // カードの位置を管理するためのリスト
   // nullの場合は初期配置を使用する
-  List<Offset?> _cardPositions = [null, null, null];
-  
+  final List<Offset?> _cardPositions = [null, null, null];
+
   final GlobalKey _containerKey = GlobalKey();
 
   void _updateCardPosition(int index, Offset delta) {
@@ -187,11 +185,11 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
         final width = constraints.maxWidth;
         final height = constraints.maxHeight;
         final cardWidth = (width - HIGSpacing.s24 * 2) / 3;
-        
+
         // 初期位置の設定（まだ設定されていない場合）
         if (_cardPositions[0] == null) {
           // 3つのカードを均等に配置
-          _cardPositions[0] = Offset(0, 0);
+          _cardPositions[0] = const Offset(0, 0);
           _cardPositions[1] = Offset(cardWidth + HIGSpacing.s24, 0);
           _cardPositions[2] = Offset((cardWidth + HIGSpacing.s24) * 2, 0);
         }
@@ -201,12 +199,13 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
             blur: 20,
             glassColor: Color(0x33FFFFFF),
             thickness: 30,
-            lightIntensity: 0.6,
-            ambientStrength: 0.4,
-            chromaticAberration: 0.5,
+            lightIntensity: 0.8, // 光を強く
+            ambientStrength: 0.5,
+            chromaticAberration: 0.8, // 色収差を強くして虹色感を出す
+            refractiveIndex: 1.6, // 屈折率を上げて歪みを強調
           ),
           child: LiquidGlassBlendGroup(
-            blend: 20, // ブレンドの強さ
+            blend: 40, // ブレンドを強くして、より遠くからくっつくようにする
             child: Stack(
               key: _containerKey,
               children: [
@@ -262,7 +261,7 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
                   description:
                       '画面上のオブジェクトを、現実のモノに触れるように直接操作します（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。直感的で自然な操作感を生み出し、ユーザーとシステムの間に余計な障壁を作らないことを大切にします。',
                   icon: CupertinoIcons.hand_draw,
-                  child: Center(
+                  child: const Center(
                     child: _DirectManipulationDemo(),
                   ),
                 ),
@@ -325,7 +324,9 @@ class _HigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // LiquidGlass.groupedを使用してブレンドグループに参加する
     return LiquidGlass.grouped(
-      shape: const LiquidRoundedRectangle(borderRadius: 16),
+      shape: const LiquidRoundedRectangle(
+        borderRadius: 32,
+      ), // 角丸を大きくして液体の表面張力っぽさを出す
       child: Padding(
         padding: HIGSpacing.all24,
         child: Column(
