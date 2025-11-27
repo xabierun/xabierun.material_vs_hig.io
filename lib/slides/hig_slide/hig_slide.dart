@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:material_vs_hig/tokens/colors/hig_colors.dart';
 import 'package:material_vs_hig/tokens/radius/hig_radius.dart';
 import 'package:material_vs_hig/tokens/spacing/hig_spacing.dart';
@@ -43,12 +44,15 @@ class _SlideBody extends StatelessWidget {
             children: [
               // 戻るボタン
               if (currentSlide > 0)
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: flutterDeck.previous,
-                  child: const Icon(
-                    CupertinoIcons.back,
-                    color: HIGColors.primary,
+                LiquidGlass.withOwnLayer(
+                  shape: const LiquidOval(),
+                  child: CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: flutterDeck.previous,
+                    child: const Icon(
+                      CupertinoIcons.back,
+                      color: HIGColors.primary,
+                    ),
                   ),
                 )
               else
@@ -108,7 +112,7 @@ class _SlideBody extends StatelessWidget {
                   ),
                   const SizedBox(height: HIGSpacing.s24),
                   Text(
-                    'Apple製品（iOS, macOSなど）全体で共通の「お作法」。派手な表現を抑え、ユーザーが何も考えなくても直感的に使えることを最優先します。MD3 Expressiveが「使って楽しい」なら、HIGは「使っていてストレスがない」を目指します。',
+                    '''Apple製品（iOS, macOSなど）全体で共通の「お作法」。\n\n派手な表現を抑え、ユーザーが何も考えなくても直感的に使えることを最優先します。\nMD3 Expressiveが「使って楽しい」なら、HIGは「使っていてストレスがない」を目指します。''',
                     style: HIGTextStyles.bodyLabelSecondary,
                   ),
                 ],
@@ -150,7 +154,10 @@ class _SlideBody extends StatelessWidget {
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(CupertinoIcons.info, color: HIGColors.primary),
+                              Icon(
+                                CupertinoIcons.info,
+                                color: HIGColors.primary,
+                              ),
                               SizedBox(width: 8),
                               Text('Clean & Clear'),
                             ],
@@ -160,13 +167,13 @@ class _SlideBody extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: HIGSpacing.s24),
-                  Expanded(
+                  const Expanded(
                     child: _HigCard(
                       title: '3. UIは「現実世界の延長」\nとして触る',
                       description:
                           '画面上のオブジェクトを、現実のモノに触れるように直接操作します（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。直感的で自然な操作感を生み出し、ユーザーとシステムの間に余計な障壁を作らないことを大切にします。',
                       icon: CupertinoIcons.hand_draw,
-                      child: const Center(
+                      child: Center(
                         child: _DirectManipulationDemo(),
                       ),
                     ),
@@ -245,7 +252,8 @@ class _DirectManipulationDemo extends StatefulWidget {
   const _DirectManipulationDemo();
 
   @override
-  State<_DirectManipulationDemo> createState() => _DirectManipulationDemoState();
+  State<_DirectManipulationDemo> createState() =>
+      _DirectManipulationDemoState();
 }
 
 class _DirectManipulationDemoState extends State<_DirectManipulationDemo> {
@@ -270,4 +278,3 @@ class _DirectManipulationDemoState extends State<_DirectManipulationDemo> {
     );
   }
 }
-
