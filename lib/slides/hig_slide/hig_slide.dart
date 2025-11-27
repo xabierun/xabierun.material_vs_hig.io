@@ -47,6 +47,7 @@ class _SlideBody extends StatelessWidget {
               settings: const LiquidGlassSettings(
                 blur: 20,
                 glassColor: Color(0x40FFFFFF),
+                thickness: 20,
               ),
               child: LiquidGlass(
                 shape: const LiquidRoundedRectangle(
@@ -114,6 +115,7 @@ class _SlideBody extends StatelessWidget {
                       settings: const LiquidGlassSettings(
                         blur: 30,
                         glassColor: Color(0x66FFFFFF),
+                        thickness: 20,
                         lightIntensity: 0.8,
                       ),
                       child: LiquidGlass(
@@ -140,83 +142,166 @@ class _SlideBody extends StatelessWidget {
                     const SizedBox(height: HIGSpacing.s48),
                     // ポイント
                     Expanded(
-                      child: LiquidGlassLayer(
-                        settings: const LiquidGlassSettings(
-                          blur: 20,
-                          glassColor: Color(0x33FFFFFF),
-                          thickness: 30,
-                          lightIntensity: 0.6,
-                          ambientStrength: 0.4,
-                          chromaticAberration: 0.5,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: _HigCard(
-                                title: '1. どこを触っても一緒！\n安心の「既視感」',
-                                description:
-                                    'アプリが変わっても、ボタンやアイコンの形、操作のルールは変えません。ユーザーは新しいアプリを使うたびに操作を覚える必要がなく、学習コストがゼロに。エンジニアもデザイナーも、共通のコンポーネントを使うことで開発と品質チェックがスムーズになります。',
-                                icon: CupertinoIcons.square_grid_2x2,
-                                child: Center(
-                                  child: CupertinoButton.filled(
-                                    onPressed: () {},
-                                    child: const Text('Standard Button'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: HIGSpacing.s24),
-                            Expanded(
-                              child: _HigCard(
-                                title: '2. 情報は「一目でわかる」\nのが正義！',
-                                description:
-                                    'テキストは読みやすく、アイコンは意味がすぐ伝わるシンプルな形を採用。不必要な装飾は徹底的に排除し、情報が背景に埋もれないようにします。MD3 Expressiveの大胆な色や形と違い、HIGは控えめなエレガンスで、機能性が際立つデザインを求めます。',
-                                icon: CupertinoIcons.eye,
-                                child: Center(
-                                  child: Container(
-                                    padding: HIGSpacing.all12,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: HIGColors.separator,
-                                      ),
-                                      borderRadius: HIGRadius.all8,
-                                    ),
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          CupertinoIcons.info,
-                                          color: HIGColors.primary,
-                                        ),
-                                        SizedBox(width: 8),
-                                        Text('Clean & Clear'),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: HIGSpacing.s24),
-                            const Expanded(
-                              child: _HigCard(
-                                title: '3. UIは「現実世界の延長」\nとして触る',
-                                description:
-                                    '画面上のオブジェクトを、現実のモノに触れるように直接操作します（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。直感的で自然な操作感を生み出し、ユーザーとシステムの間に余計な障壁を作らないことを大切にします。',
-                                icon: CupertinoIcons.hand_draw,
-                                child: Center(
-                                  child: _DirectManipulationDemo(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      child: _InteractiveCardsArea(),
                     ),
                   ],
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InteractiveCardsArea extends StatefulWidget {
+  const _InteractiveCardsArea();
+
+  @override
+  State<_InteractiveCardsArea> createState() => _InteractiveCardsAreaState();
+}
+
+class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
+  // カードの位置を管理するためのリスト
+  // nullの場合は初期配置を使用する
+  List<Offset?> _cardPositions = [null, null, null];
+  
+  final GlobalKey _containerKey = GlobalKey();
+
+  void _updateCardPosition(int index, Offset delta) {
+    setState(() {
+      if (_cardPositions[index] == null) {
+        // 初期位置がまだ計算されていない場合は、レイアウト後に設定されるはずだが
+        // ここでは安全策として何もしない、または初期位置を取得して加算する処理が必要
+        return;
+      }
+      _cardPositions[index] = _cardPositions[index]! + delta;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final height = constraints.maxHeight;
+        final cardWidth = (width - HIGSpacing.s24 * 2) / 3;
+        
+        // 初期位置の設定（まだ設定されていない場合）
+        if (_cardPositions[0] == null) {
+          // 3つのカードを均等に配置
+          _cardPositions[0] = Offset(0, 0);
+          _cardPositions[1] = Offset(cardWidth + HIGSpacing.s24, 0);
+          _cardPositions[2] = Offset((cardWidth + HIGSpacing.s24) * 2, 0);
+        }
+
+        return LiquidGlassLayer(
+          settings: const LiquidGlassSettings(
+            blur: 20,
+            glassColor: Color(0x33FFFFFF),
+            thickness: 30,
+            lightIntensity: 0.6,
+            ambientStrength: 0.4,
+            chromaticAberration: 0.5,
+          ),
+          child: LiquidGlassBlendGroup(
+            blend: 20, // ブレンドの強さ
+            child: Stack(
+              key: _containerKey,
+              children: [
+                _buildDraggableCard(
+                  index: 0,
+                  width: cardWidth,
+                  height: height, // 高さも指定
+                  title: '1. どこを触っても一緒！\n安心の「既視感」',
+                  description:
+                      'アプリが変わっても、ボタンやアイコンの形、操作のルールは変えません。ユーザーは新しいアプリを使うたびに操作を覚える必要がなく、学習コストがゼロに。エンジニアもデザイナーも、共通のコンポーネントを使うことで開発と品質チェックがスムーズになります。',
+                  icon: CupertinoIcons.square_grid_2x2,
+                  child: Center(
+                    child: CupertinoButton.filled(
+                      onPressed: () {},
+                      child: const Text('Standard Button'),
+                    ),
+                  ),
+                ),
+                _buildDraggableCard(
+                  index: 1,
+                  width: cardWidth,
+                  height: height,
+                  title: '2. 情報は「一目でわかる」\nのが正義！',
+                  description:
+                      'テキストは読みやすく、アイコンは意味がすぐ伝わるシンプルな形を採用。不必要な装飾は徹底的に排除し、情報が背景に埋もれないようにします。MD3 Expressiveの大胆な色や形と違い、HIGは控えめなエレガンスで、機能性が際立つデザインを求めます。',
+                  icon: CupertinoIcons.eye,
+                  child: Center(
+                    child: Container(
+                      padding: HIGSpacing.all12,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: HIGColors.separator),
+                        borderRadius: HIGRadius.all8,
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            CupertinoIcons.info,
+                            color: HIGColors.primary,
+                          ),
+                          SizedBox(width: 8),
+                          Text('Clean & Clear'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                _buildDraggableCard(
+                  index: 2,
+                  width: cardWidth,
+                  height: height,
+                  title: '3. UIは「現実世界の延長」\nとして触る',
+                  description:
+                      '画面上のオブジェクトを、現実のモノに触れるように直接操作します（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。直感的で自然な操作感を生み出し、ユーザーとシステムの間に余計な障壁を作らないことを大切にします。',
+                  icon: CupertinoIcons.hand_draw,
+                  child: Center(
+                    child: _DirectManipulationDemo(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildDraggableCard({
+    required int index,
+    required double width,
+    required double height,
+    required String title,
+    required String description,
+    required IconData icon,
+    Widget? child,
+  }) {
+    final position = _cardPositions[index] ?? Offset.zero;
+
+    return Positioned(
+      left: position.dx,
+      top: position.dy,
+      width: width,
+      // 高さは内容に合わせて自動調整されるが、Positionedで制約を与える場合はheightも必要
+      // ただし、内容は可変長なのでbottomを指定しない方が良いが、Stack内での配置なので
+      // ここでは高さを指定せず、Containerの高さに任せる形にするには工夫が必要
+      // 今回はLayoutBuilderで取得した高さを使わず、コンテンツの高さに任せる
+      child: GestureDetector(
+        onPanUpdate: (details) {
+          _updateCardPosition(index, details.delta);
+        },
+        child: _HigCard(
+          title: title,
+          description: description,
+          icon: icon,
+          child: child,
         ),
       ),
     );
@@ -238,7 +323,8 @@ class _HigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LiquidGlass(
+    // LiquidGlass.groupedを使用してブレンドグループに参加する
+    return LiquidGlass.grouped(
       shape: const LiquidRoundedRectangle(borderRadius: 16),
       child: Padding(
         padding: HIGSpacing.all24,
@@ -265,7 +351,7 @@ class _HigCard extends StatelessWidget {
               style: HIGTextStyles.bodyLabelSecondary.copyWith(fontSize: 20),
             ),
             if (child != null) ...[
-              const Spacer(),
+              const SizedBox(height: HIGSpacing.s16),
               child!,
             ],
           ],
