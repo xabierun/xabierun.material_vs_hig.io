@@ -46,6 +46,11 @@ class _SlideBody extends StatelessWidget {
               if (currentSlide > 0)
                 LiquidGlass.withOwnLayer(
                   shape: const LiquidOval(),
+                  settings: LiquidGlassSettings(
+                    glassColor: HIGColors.primary.withOpacity(0.1),
+                    blur: 20,
+                    thickness: 10,
+                  ),
                   child: CupertinoButton(
                     padding: EdgeInsets.zero,
                     onPressed: flutterDeck.previous,
