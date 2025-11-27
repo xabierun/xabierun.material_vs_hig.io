@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import 'package:material_vs_hig/slides/hig_slide/direct_manipulation_demo.dart';
+import 'package:material_vs_hig/slides/hig_slide/header_widget.dart';
 import 'package:material_vs_hig/tokens/colors/hig_colors.dart';
 import 'package:material_vs_hig/tokens/radius/hig_radius.dart';
 import 'package:material_vs_hig/tokens/spacing/hig_spacing.dart';
@@ -29,64 +31,12 @@ class _SlideBody extends StatelessWidget {
     const slideTitle = 'Human Interface Guidelines';
 
     return Scaffold(
-      backgroundColor: HIGColors.background,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(120),
-        child: Container(
-          color: HIGColors.surface,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
-            left: HIGSpacing.s16,
-            right: HIGSpacing.s16,
-            bottom: HIGSpacing.s16,
-          ),
-          child: Row(
-            children: [
-              // 戻るボタン
-              if (currentSlide > 0)
-                LiquidGlass.withOwnLayer(
-                  shape: const LiquidOval(),
-                  settings: LiquidGlassSettings(
-                    glassColor: HIGColors.primary.withOpacity(0.1),
-                    blur: 20,
-                    thickness: 10,
-                  ),
-                  child: CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: flutterDeck.previous,
-                    child: const Icon(
-                      CupertinoIcons.back,
-                      color: HIGColors.primary,
-                    ),
-                  ),
-                )
-              else
-                const SizedBox(width: HIGSpacing.s48),
-              const SizedBox(width: HIGSpacing.s8),
-              // タイトル
-              Expanded(
-                child: Text(
-                  slideTitle,
-                  style: HIGTextStyles.headingLabel,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(width: HIGSpacing.s8),
-              // 進むボタン
-              if (currentSlide < totalSlides - 1)
-                CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: flutterDeck.next,
-                  child: const Icon(
-                    CupertinoIcons.forward,
-                    color: HIGColors.primary,
-                  ),
-                )
-              else
-                const SizedBox(width: HIGSpacing.s48),
-            ],
-          ),
-        ),
+      backgroundColor: HIGColors.backgroundBlueGrey,
+      appBar: HeaderWidget(
+        currentSlide: currentSlide,
+        flutterDeck: flutterDeck,
+        slideTitle: slideTitle,
+        totalSlides: totalSlides,
       ),
       body: Padding(
         padding: HIGSpacing.all64,
@@ -97,9 +47,10 @@ class _SlideBody extends StatelessWidget {
             // 核心的な説明
             LiquidGlassLayer(
               settings: const LiquidGlassSettings(
-                blur: 30,
-                glassColor: Color(0x66FFFFFF),
+                blur: 10,
+                glassColor: Color(0x33FFFFFF),
                 lightIntensity: 0.8,
+                ambientStrength: 0.5,
               ),
               child: LiquidGlass(
                 shape: const LiquidRoundedRectangle(borderRadius: 16),
@@ -196,7 +147,7 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
                   height: height, // 高さも指定
                   title: '1. どこを触っても一緒！\n安心の「既視感」',
                   description:
-                      'アプリが変わっても、ボタンやアイコンの形、操作のルールは変えません。ユーザーは新しいアプリを使うたびに操作を覚える必要がなく、学習コストがゼロに。エンジニアもデザイナーも、共通のコンポーネントを使うことで開発と品質チェックがスムーズになります。',
+                      '''アプリが変わっても、ボタンやアイコンの形、操作のルールは変えません。\nユーザーは新しいアプリを使うたびに操作を覚える必要がなく、学習コストがゼロ。\n\nエンジニアもデザイナーも、共通のコンポーネントを使うことで開発と品質チェックがスムーズになります。''',
                   icon: CupertinoIcons.square_grid_2x2,
                   child: Center(
                     child: CupertinoButton.filled(
@@ -211,7 +162,7 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
                   height: height,
                   title: '2. 情報は「一目でわかる」\nのが正義！',
                   description:
-                      'テキストは読みやすく、アイコンは意味がすぐ伝わるシンプルな形を採用。不必要な装飾は徹底的に排除し、情報が背景に埋もれないようにします。MD3 Expressiveの大胆な色や形と違い、HIGは控えめなエレガンスで、機能性が際立つデザインを求めます。',
+                      '''テキストは読みやすく、アイコンは意味がすぐ伝わるシンプルな形を採用。\n不必要な装飾は徹底的に排除し、情報が背景に埋もれないようにします。\n\nHIGは控えめな情報で、機能性が際立つデザインを求めます。''',
                   icon: CupertinoIcons.eye,
                   child: Center(
                     child: Container(
@@ -240,10 +191,10 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
                   height: height,
                   title: '3. UIは「現実世界の延長」\nとして触る',
                   description:
-                      '画面上のオブジェクトを、現実のモノに触れるように直接操作します（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。直感的で自然な操作感を生み出し、ユーザーとシステムの間に余計な障壁を作らないことを大切にします。',
+                      '''画面上のオブジェクトを、現実のモノに触れるように直接操作します\n（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。\n\n直感的で自然な操作感を生み出し、ユーザーとシステムの間に余計な障壁を作らないことを大切にします。''',
                   icon: CupertinoIcons.hand_draw,
                   child: const Center(
-                    child: _DirectManipulationDemo(),
+                    child: DirectManipulationDemo(),
                   ),
                 ),
               ],
@@ -339,37 +290,6 @@ class _HigCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _DirectManipulationDemo extends StatefulWidget {
-  const _DirectManipulationDemo();
-
-  @override
-  State<_DirectManipulationDemo> createState() =>
-      _DirectManipulationDemoState();
-}
-
-class _DirectManipulationDemoState extends State<_DirectManipulationDemo> {
-  double _value = 0.5;
-  bool _switchValue = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CupertinoSlider(
-          value: _value,
-          onChanged: (value) => setState(() => _value = value),
-        ),
-        const SizedBox(height: 16),
-        CupertinoSwitch(
-          value: _switchValue,
-          onChanged: (value) => setState(() => _switchValue = value),
-        ),
-      ],
     );
   }
 }

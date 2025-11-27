@@ -104,6 +104,9 @@ class HIGColors {
   /// グループ化されたターシャリ背景カラー
   static const Color groupedBackgroundTertiary = Color(0xFFF2F2F7);
 
+  /// 薄い青色とグレーが混ざった背景カラー
+  static const Color backgroundBlueGrey = Color(0xFFE8EBF0);
+
   /// Error Colors
   /// エラーカラー。エラーや警告を表示する際に使用します。
 
