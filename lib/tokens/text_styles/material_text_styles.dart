@@ -9,37 +9,37 @@ class MaterialTextStyles {
 
   /// タイトル - スライドのメインタイトル用
   static const TextStyle title = TextStyle(
-    fontSize: 48.0,
+    fontSize: 48,
     fontWeight: FontWeight.bold,
-    letterSpacing: 0.0,
+    letterSpacing: 0,
   );
 
   /// 見出し - セクション見出し用
   static const TextStyle heading = TextStyle(
-    fontSize: 36.0,
+    fontSize: 36,
     fontWeight: FontWeight.bold,
-    letterSpacing: 0.0,
+    letterSpacing: 0,
   );
 
   /// サブ見出し - サブセクション見出し用
   static const TextStyle subheading = TextStyle(
-    fontSize: 28.0,
+    fontSize: 28,
     fontWeight: FontWeight.w600,
-    letterSpacing: 0.0,
+    letterSpacing: 0,
   );
 
   /// 本文 - 通常のテキスト用
   static const TextStyle body = TextStyle(
-    fontSize: 24.0,
+    fontSize: 24,
     fontWeight: FontWeight.normal,
-    letterSpacing: 0.0,
+    letterSpacing: 0,
   );
 
   /// キャプション - 補足説明用
   static const TextStyle caption = TextStyle(
-    fontSize: 18.0,
+    fontSize: 18,
     fontWeight: FontWeight.normal,
-    letterSpacing: 0.0,
+    letterSpacing: 0,
   );
 
   // With Colors (カラー付きバリエーション)
