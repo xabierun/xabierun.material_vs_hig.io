@@ -200,4 +200,3 @@ class HIGColors {
   /// 半透明のセカンダリーカラーのティント
   static const Color tintSecondary = Color(0x2034C759);
 }
-
