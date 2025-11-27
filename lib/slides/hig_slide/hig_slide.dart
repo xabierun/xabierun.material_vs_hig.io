@@ -29,122 +29,103 @@ class _SlideBody extends StatelessWidget {
     const slideTitle = 'Human Interface Guidelines';
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFFa8edea),
-              Color(0xFFfed6e3),
+      backgroundColor: HIGColors.background,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(120),
+        child: Container(
+          color: HIGColors.surface,
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top,
+            left: HIGSpacing.s16,
+            right: HIGSpacing.s16,
+            bottom: HIGSpacing.s16,
+          ),
+          child: Row(
+            children: [
+              // 戻るボタン
+              if (currentSlide > 0)
+                LiquidGlass.withOwnLayer(
+                  shape: const LiquidOval(),
+                  settings: LiquidGlassSettings(
+                    glassColor: HIGColors.primary.withOpacity(0.1),
+                    blur: 20,
+                    thickness: 10,
+                  ),
+                  child: CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: flutterDeck.previous,
+                    child: const Icon(
+                      CupertinoIcons.back,
+                      color: HIGColors.primary,
+                    ),
+                  ),
+                )
+              else
+                const SizedBox(width: HIGSpacing.s48),
+              const SizedBox(width: HIGSpacing.s8),
+              // タイトル
+              Expanded(
+                child: Text(
+                  slideTitle,
+                  style: HIGTextStyles.headingLabel,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(width: HIGSpacing.s8),
+              // 進むボタン
+              if (currentSlide < totalSlides - 1)
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: flutterDeck.next,
+                  child: const Icon(
+                    CupertinoIcons.forward,
+                    color: HIGColors.primary,
+                  ),
+                )
+              else
+                const SizedBox(width: HIGSpacing.s48),
             ],
           ),
         ),
+      ),
+      body: Padding(
+        padding: HIGSpacing.all64,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ヘッダー
+            const SizedBox(height: HIGSpacing.s32),
+            // 核心的な説明
             LiquidGlassLayer(
               settings: const LiquidGlassSettings(
-                blur: 20,
-                glassColor: Color(0x40FFFFFF),
+                blur: 30,
+                glassColor: Color(0x66FFFFFF),
+                lightIntensity: 0.8,
               ),
               child: LiquidGlass(
-                shape: const LiquidRoundedRectangle(
-                  borderRadius: 0,
-                ),
-                child: Container(
-                  height: 120,
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top,
-                    left: HIGSpacing.s16,
-                    right: HIGSpacing.s16,
-                    bottom: HIGSpacing.s16,
-                  ),
-                  child: Row(
+                shape: const LiquidRoundedRectangle(borderRadius: 16),
+                child: Padding(
+                  padding: HIGSpacing.all32,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // 戻るボタン
-                      if (currentSlide > 0)
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: flutterDeck.previous,
-                          child: const Icon(
-                            CupertinoIcons.back,
-                            color: HIGColors.primary,
-                          ),
-                        )
-                      else
-                        const SizedBox(width: HIGSpacing.s48),
-                      const SizedBox(width: HIGSpacing.s8),
-                      // タイトル
-                      Expanded(
-                        child: Text(
-                          slideTitle,
-                          style: HIGTextStyles.headingLabel,
-                          textAlign: TextAlign.center,
-                        ),
+                      Text(
+                        'HIG とは？ 「迷わない、疲れない、普遍的な美しさ」',
+                        style: HIGTextStyles.headingLabel,
                       ),
-                      const SizedBox(width: HIGSpacing.s8),
-                      // 進むボタン
-                      if (currentSlide < totalSlides - 1)
-                        CupertinoButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: flutterDeck.next,
-                          child: const Icon(
-                            CupertinoIcons.forward,
-                            color: HIGColors.primary,
-                          ),
-                        )
-                      else
-                        const SizedBox(width: HIGSpacing.s48),
+                      const SizedBox(height: HIGSpacing.s24),
+                      Text(
+                        '''Apple製品（iOS, macOSなど）全体で共通の「お作法」。\n\n派手な表現を抑え、ユーザーが何も考えなくても直感的に使えることを最優先します。\nMD3 Expressiveが「視覚的に楽しい」なら、HIGは「目に見える情報量を減らして使いやすい」を目指します。''',
+                        style: HIGTextStyles.bodyLabelSecondary,
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
-            // コンテンツ
-            Expanded(
-              child: Padding(
-                padding: HIGSpacing.all64,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: HIGSpacing.s32),
-                    // 核心的な説明
-                    LiquidGlassLayer(
-                      settings: const LiquidGlassSettings(
-                        blur: 30,
-                        glassColor: Color(0x66FFFFFF),
-                        lightIntensity: 0.8,
-                      ),
-                      child: LiquidGlass(
-                        shape: const LiquidRoundedRectangle(borderRadius: 16),
-                        child: Padding(
-                          padding: HIGSpacing.all32,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'HIG とは？ 「迷わない、疲れない、普遍的な美しさ」',
-                                style: HIGTextStyles.headingLabel,
-                              ),
-                              const SizedBox(height: HIGSpacing.s24),
-                              Text(
-                                '''Apple製品（iOS, macOSなど）全体で共通の「お作法」。\n\n派手な表現を抑え、ユーザーが何も考えなくても直感的に使えることを最優先します。\nMD3 Expressiveが「視覚的に楽しい」なら、HIGは「目に見える情報量を減らして使いやすい」を目指します。''',
-                                style: HIGTextStyles.bodyLabelSecondary,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: HIGSpacing.s48),
-                    // ポイント
-                    const Expanded(
-                      child: _InteractiveCardsArea(),
-                    ),
-                  ],
-                ),
-              ),
+            const SizedBox(height: HIGSpacing.s48),
+            // ポイント
+            const Expanded(
+              child: _InteractiveCardsArea(),
             ),
           ],
         ),
