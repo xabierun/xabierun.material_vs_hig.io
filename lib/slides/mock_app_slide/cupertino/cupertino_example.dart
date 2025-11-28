@@ -63,45 +63,53 @@ class _CupertinoExampleState extends State<CupertinoExample> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      backgroundColor: HIGColors.background,
-      child: Stack(
-        children: [
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    if (index >= _imageIndices.length) {
-                      return const Center(
-                        child: CupertinoActivityIndicator(),
-                      );
-                    }
+    return CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      theme: const CupertinoThemeData(
+        primaryColor: HIGColors.primary,
+        scaffoldBackgroundColor: HIGColors.background,
+        barBackgroundColor: HIGColors.surface,
+      ),
+      home: CupertinoPageScaffold(
+        backgroundColor: HIGColors.background,
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverGrid(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                  ),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      if (index >= _imageIndices.length) {
+                        return const Center(
+                          child: CupertinoActivityIndicator(),
+                        );
+                      }
 
-                    return GridItem(imageIndex: _imageIndices[index]);
-                  },
-                  childCount: _isLoading
-                      ? _imageIndices.length + 1
-                      : _imageIndices.length,
+                      return GridItem(imageIndex: _imageIndices[index]);
+                    },
+                    childCount: _isLoading
+                        ? _imageIndices.length + 1
+                        : _imageIndices.length,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          GlassBottomNavigation(
-            selectedIndex: _selectedTabIndex,
-            onTabChanged: (index) {
-              setState(() {
-                _selectedTabIndex = index;
-              });
-            },
-          ),
-        ],
+              ],
+            ),
+            GlassBottomNavigation(
+              selectedIndex: _selectedTabIndex,
+              onTabChanged: (index) {
+                setState(() {
+                  _selectedTabIndex = index;
+                });
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
