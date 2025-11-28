@@ -28,13 +28,15 @@ class DetailActionButtons extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    CupertinoIcons.arrow_down_circle_fill,
+                    CupertinoIcons.tray_arrow_down_fill,
+                    color: HIGColors.background,
                     size: 20,
                   ),
                   SizedBox(width: 8),
                   Text(
                     'Save',
                     style: TextStyle(
+                      color: HIGColors.background,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -74,4 +76,3 @@ class DetailActionButtons extends StatelessWidget {
     );
   }
 }
-

@@ -8,7 +8,7 @@ class PresentationTimer extends StatefulWidget {
   /// プレゼンテーション用のタイマー付き進捗バー
   const PresentationTimer({
     required this.child,
-    this.durationInSeconds = 600, // 10分 = 600秒
+    this.durationInSeconds = 10, // 10分 = 600秒
     super.key,
   });
 

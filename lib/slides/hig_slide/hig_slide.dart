@@ -147,7 +147,7 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
                   height: height, // 高さも指定
                   title: '1. どこを触っても一緒！\n安心の「既視感」',
                   description:
-                      '''アプリが変わっても、ボタンやアイコンの形、操作のルールは変えません。\nユーザーは新しいアプリを使うたびに操作を覚える必要がなく、学習コストがゼロ。\n\nエンジニアもデザイナーも、共通のコンポーネントを使うことで開発と品質チェックがスムーズになります。''',
+                      '''アプリが変わっても、ボタンやアイコンの形、操作のルールは変更しない。\nユーザーは新しいアプリを使うたびに操作を覚える必要がなく、学習コストがゼロ。\n\nエンジニアもデザイナーも、共通のコンポーネントを使うことで開発と品質チェックがスムーズになります。''',
                   icon: CupertinoIcons.square_grid_2x2,
                   child: Center(
                     child: CupertinoButton.filled(
@@ -162,7 +162,7 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
                   height: height,
                   title: '2. 情報は「一目でわかる」\nのが正義！',
                   description:
-                      '''テキストは読みやすく、アイコンは意味がすぐ伝わるシンプルな形を採用。\n不必要な装飾は徹底的に排除し、情報が背景に埋もれないようにします。\n\nHIGは控えめな情報で、機能性が際立つデザインを求めます。''',
+                      '''テキストは読みやすく、アイコンは意味がすぐ伝わるシンプルな形を採用。\n不必要な装飾は徹底的に排除し、コンテンツが背景に埋もれないようにします。\n\nHIGは控えめな情報で、機能性が際立つデザインが特徴です。''',
                   icon: CupertinoIcons.eye,
                   child: Center(
                     child: Container(
@@ -191,7 +191,7 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
                   height: height,
                   title: '3. UIは「現実世界の延長」\nとして触る',
                   description:
-                      '''画面上のオブジェクトを、現実のモノに触れるように直接操作します\n（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。\n\n直感的で自然な操作感を生み出し、ユーザーとシステムの間に余計な障壁を作らないことを大切にします。''',
+                      '''画面上のオブジェクトを、現実のモノに触れるように直接操作します\n（例：リストを指でドラッグして移動、ページをめくるようにスワイプ）。\n\n直感的で自然な操作感を生み出し、ユーザーとシステムの間に余障壁を作らないことを重視。''',
                   icon: CupertinoIcons.hand_draw,
                   child: const Center(
                     child: DirectManipulationDemo(),
@@ -232,7 +232,6 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
           title: title,
           description: description,
           icon: icon,
-          child: child,
         ),
       ),
     );

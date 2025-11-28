@@ -118,7 +118,7 @@ class ImageDetailScreen extends StatelessWidget {
         content: Text(message),
         actions: [
           CupertinoDialogAction(
-            child: const Text('OK'),
+            child: const Text('OK', style: TextStyle(color: HIGColors.label)),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ],

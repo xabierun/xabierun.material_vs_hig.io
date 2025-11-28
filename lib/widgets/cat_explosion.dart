@@ -103,7 +103,7 @@ class _CatExplosionState extends State<CatExplosion>
                 child: Transform.scale(
                   scale: 1.0 + (_controller.value * 0.5),
                   child: Text(
-                    '🐱',
+                    '💩',
                     style: TextStyle(fontSize: widget.size * 0.67),
                   ),
                 ),
@@ -140,4 +140,3 @@ class _Particle {
   final Color color;
   final double size;
 }
-
