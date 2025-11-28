@@ -47,7 +47,7 @@ class _SlideBody extends StatelessWidget {
             // 核心的な説明
             LiquidGlassLayer(
               settings: const LiquidGlassSettings(
-                blur: 10,
+                blur: 1,
                 glassColor: Color(0x33FFFFFF),
                 lightIntensity: 0.8,
                 ambientStrength: 0.5,
@@ -65,7 +65,7 @@ class _SlideBody extends StatelessWidget {
                       ),
                       const SizedBox(height: HIGSpacing.s24),
                       Text(
-                        '''Apple製品（iOS, macOSなど）全体で共通の「お作法」。\n\n派手な表現を抑え、ユーザーが何も考えなくても直感的に使えることを最優先します。\nMD3 Expressiveが「視覚的に楽しい」なら、HIGは「目に見える情報量を減らして使いやすい」を目指します。''',
+                        '''Apple製品（iOS, macOSなど）全体で共通の「ルール」。\n\n派手な表現を抑え、ユーザーが何も考えなくても直感的に使えることを最優先。\n一言でまとめるとHIGは「目に見える情報量を減らして使いやすい」ことを目的としている''',
                         style: HIGTextStyles.bodyLabelSecondary,
                       ),
                     ],
@@ -128,7 +128,7 @@ class _InteractiveCardsAreaState extends State<_InteractiveCardsArea> {
 
         return LiquidGlassLayer(
           settings: const LiquidGlassSettings(
-            blur: 20,
+            blur: 1,
             glassColor: Color(0x33FFFFFF),
             thickness: 30,
             lightIntensity: 0.8, // 光を強く

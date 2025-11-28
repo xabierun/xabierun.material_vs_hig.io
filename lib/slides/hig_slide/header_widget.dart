@@ -44,7 +44,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
                 if (currentSlide > 0) ...[
                   LiquidGlassLayer(
                     settings: const LiquidGlassSettings(
-                      blur: 10,
+                      blur: 1,
                       glassColor: Color(0x33FFFFFF),
                       lightIntensity: 0.8,
                       ambientStrength: 0.5,
@@ -73,7 +73,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
                 Expanded(
                   child: LiquidGlassLayer(
                     settings: const LiquidGlassSettings(
-                      blur: 10,
+                      blur: 1,
                       glassColor: Color(0x33FFFFFF),
                       lightIntensity: 0.8,
                       ambientStrength: 0.5,

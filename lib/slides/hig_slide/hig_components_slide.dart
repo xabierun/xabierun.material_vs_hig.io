@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import 'package:material_vs_hig/slides/hig_slide/header_widget.dart';
 import 'package:material_vs_hig/tokens/colors/hig_colors.dart';
 import 'package:material_vs_hig/tokens/radius/hig_radius.dart';
 import 'package:material_vs_hig/tokens/spacing/hig_spacing.dart';
@@ -49,318 +51,318 @@ class _SlideBodyState extends State<_SlideBody> {
     final totalSlides = flutterDeck.router.slides.length;
     const slideTitle = 'Human Interface Guidelines Components';
 
-    return CupertinoPageScaffold(
-      backgroundColor: HIGColors.background,
-      navigationBar: CupertinoNavigationBar(
-        backgroundColor: HIGColors.surfaceBlur,
-        border: null,
-        leading: currentSlide > 0
-            ? CupertinoButton(
-                padding: EdgeInsets.zero,
-                child: const Icon(CupertinoIcons.back),
-                onPressed: flutterDeck.previous,
-              )
-            : const SizedBox(width: 44), // Spacer
-        middle: Text(slideTitle, style: HIGTextStyles.body),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CupertinoButton(
-              padding: EdgeInsets.zero,
-              child: const Icon(CupertinoIcons.slider_horizontal_3),
-              onPressed: () {},
-            ),
-            if (currentSlide < totalSlides - 1)
-              CupertinoButton(
-                padding: EdgeInsets.zero,
-                child: const Icon(CupertinoIcons.forward),
-                onPressed: flutterDeck.next,
-              ),
-          ],
-        ),
+    return Scaffold(
+      backgroundColor: HIGColors.backgroundBlueGrey,
+      appBar: HeaderWidget(
+        currentSlide: currentSlide,
+        flutterDeck: flutterDeck,
+        slideTitle: slideTitle,
+        totalSlides: totalSlides,
       ),
-      child: SafeArea(
-        child: Padding(
-          padding: HIGSpacing.all48,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title Section
-              Text(
-                'よく使われるコンポーネント',
-                style: HIGTextStyles.titlePrimary,
-              ),
-              const SizedBox(height: HIGSpacing.s8),
-              Text(
-                'iOS (Human Interface Guidelines) の代表的なコンポーネント',
-                style: HIGTextStyles.bodyLabelSecondary.copyWith(
-                  fontSize: 18,
+      body: LiquidGlassLayer(
+        settings: const LiquidGlassSettings(
+          blur: 1,
+          glassColor: Color(0x33FFFFFF),
+          thickness: 30,
+          lightIntensity: 0.8,
+          ambientStrength: 0.5,
+          chromaticAberration: 0.2,
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: HIGSpacing.all48,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: HIGSpacing.s16),
+                // Title Section
+                Text(
+                  'よく使われるコンポーネント',
+                  style: HIGTextStyles.titlePrimary,
                 ),
-              ),
-              const SizedBox(height: HIGSpacing.s32),
+                const SizedBox(height: HIGSpacing.s8),
+                Text(
+                  'iOS (Human Interface Guidelines) の代表的なコンポーネント',
+                  style: HIGTextStyles.bodyLabelSecondary.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: HIGSpacing.s32),
 
-              // Component Grid
-              Expanded(
-                child: Row(
-                  children: [
-                    // Left Column
-                    Expanded(
-                      child: Column(
-                        children: [
-                          // Filter Buttons (Chips equivalent)
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Filter Buttons',
-                              description: '選択可能なフィルターボタン（カスタム）',
-                              child: Wrap(
-                                spacing: HIGSpacing.s12,
-                                runSpacing: HIGSpacing.s12,
-                                children: [
-                                  _buildFilterButton(
-                                    '写真',
-                                    _isFilterSelected1,
-                                    (val) => setState(
-                                        () => _isFilterSelected1 = val),
-                                  ),
-                                  _buildFilterButton(
-                                    '動画',
-                                    _isFilterSelected2,
-                                    (val) => setState(
-                                        () => _isFilterSelected2 = val),
-                                  ),
-                                  _buildFilterButton(
-                                    '音楽',
-                                    _isFilterSelected3,
-                                    (val) => setState(
-                                        () => _isFilterSelected3 = val),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: HIGSpacing.s16),
-
-                          // Segmented Control
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Segmented Control',
-                              description: '相互排他的な選択コントロール',
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: CupertinoSlidingSegmentedControl<int>(
-                                  groupValue: _segmentedValue,
-                                  onValueChanged: (int? value) {
-                                    if (value != null) {
-                                      setState(() {
-                                        _segmentedValue = value;
-                                      });
-                                    }
-                                  },
-                                  children: const <int, Widget>{
-                                    0: Padding(
-                                      padding: HIGSpacing.horizontal16,
-                                      child: Text('日'),
-                                    ),
-                                    1: Padding(
-                                      padding: HIGSpacing.horizontal16,
-                                      child: Text('週'),
-                                    ),
-                                    2: Padding(
-                                      padding: HIGSpacing.horizontal16,
-                                      child: Text('月'),
-                                    ),
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: HIGSpacing.s16),
-
-                          // Slider
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Slider',
-                              description: '値を連続的に選択',
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: CupertinoSlider(
-                                      value: _sliderValue,
-                                      onChanged: (value) {
-                                        setState(() => _sliderValue = value);
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(height: HIGSpacing.s8),
-                                  Text(
-                                    '${(_sliderValue * 100).round()}%',
-                                    style: HIGTextStyles.body.copyWith(
-                                      color: HIGColors.primary,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: HIGSpacing.s16),
-
-                    // Center Column
-                    Expanded(
-                      child: Column(
-                        children: [
-                          // Navigation Bar
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Navigation Bar',
-                              description: '画面上部のナビゲーション',
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: HIGColors.separator),
-                                  borderRadius: HIGRadius.all8,
-                                ),
-                                clipBehavior: Clip.hardEdge,
-                                child: const CupertinoNavigationBar(
-                                  backgroundColor: HIGColors.surfaceBlur,
-                                  middle: Text('Title'),
-                                  leading: Icon(CupertinoIcons.back),
-                                  trailing: Icon(CupertinoIcons.share),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: HIGSpacing.s16),
-
-                          // Activity Indicator
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Activity Indicator',
-                              description: '処理の進行状況を表示',
-                              child: const CupertinoActivityIndicator(
-                                radius: 20,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: HIGSpacing.s16),
-
-                    // Right Column
-                    Expanded(
-                      child: Column(
-                        children: [
-                          // Primary Button / Toolbar
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Primary Button',
-                              description: '主要なアクション',
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CupertinoButton.filled(
-                                    child: const Text('Create'),
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(height: HIGSpacing.s16),
-                                  CupertinoButton(
-                                    child: const Text('Edit'),
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: HIGSpacing.s16),
-
-                          // Switch & Badge
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Switch & Badge',
-                              description: 'トグルと通知バッジ',
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        '通知',
-                                        style: HIGTextStyles.body,
+                // Component Grid
+                Expanded(
+                  child: Row(
+                    children: [
+                      // Left Column
+                      Expanded(
+                        child: Column(
+                          children: [
+                            // Filter Buttons (Chips equivalent)
+                            Expanded(
+                              child: _ComponentCard(
+                                title: 'Filter Buttons',
+                                description: '選択可能なフィルターボタン（カスタム）',
+                                child: Wrap(
+                                  spacing: HIGSpacing.s12,
+                                  runSpacing: HIGSpacing.s12,
+                                  children: [
+                                    _buildFilterButton(
+                                      '写真',
+                                      _isFilterSelected1,
+                                      (val) => setState(
+                                        () => _isFilterSelected1 = val,
                                       ),
-                                      const SizedBox(width: HIGSpacing.s16),
-                                      CupertinoSwitch(
-                                        value: _switchValue,
-                                        onChanged: (value) {
-                                          setState(() => _switchValue = value);
-                                        },
+                                    ),
+                                    _buildFilterButton(
+                                      '動画',
+                                      _isFilterSelected2,
+                                      (val) => setState(
+                                        () => _isFilterSelected2 = val,
                                       ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: HIGSpacing.s24),
-                                  Badge.count(
-                                    count: 3,
-                                    backgroundColor: HIGColors.error,
-                                    child: const Icon(
-                                      CupertinoIcons.bell,
-                                      size: 48,
-                                      color: HIGColors.primary,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: HIGSpacing.s16),
-
-                          // Tab Bar
-                          Expanded(
-                            child: _ComponentCard(
-                              title: 'Tab Bar',
-                              description: '画面下部のナビゲーション',
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: HIGColors.separator),
-                                  borderRadius: HIGRadius.all8,
-                                ),
-                                clipBehavior: Clip.hardEdge,
-                                child: CupertinoTabBar(
-                                  currentIndex: _tabIndex,
-                                  onTap: (index) {
-                                    setState(() => _tabIndex = index);
-                                  },
-                                  items: const [
-                                    BottomNavigationBarItem(
-                                      icon: Icon(CupertinoIcons.home),
-                                      label: 'Home',
-                                    ),
-                                    BottomNavigationBarItem(
-                                      icon: Icon(CupertinoIcons.search),
-                                      label: 'Search',
-                                    ),
-                                    BottomNavigationBarItem(
-                                      icon: Icon(CupertinoIcons.profile_circled),
-                                      label: 'Profile',
+                                    _buildFilterButton(
+                                      '音楽',
+                                      _isFilterSelected3,
+                                      (val) => setState(
+                                        () => _isFilterSelected3 = val,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: HIGSpacing.s16),
+
+                            // Segmented Control
+                            Expanded(
+                              child: _ComponentCard(
+                                title: 'Segmented Control',
+                                description: '相互排他的な選択コントロール',
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: CupertinoSlidingSegmentedControl<int>(
+                                    groupValue: _segmentedValue,
+                                    onValueChanged: (int? value) {
+                                      if (value != null) {
+                                        setState(() {
+                                          _segmentedValue = value;
+                                        });
+                                      }
+                                    },
+                                    children: const <int, Widget>{
+                                      0: Padding(
+                                        padding: HIGSpacing.horizontal16,
+                                        child: Text('日'),
+                                      ),
+                                      1: Padding(
+                                        padding: HIGSpacing.horizontal16,
+                                        child: Text('週'),
+                                      ),
+                                      2: Padding(
+                                        padding: HIGSpacing.horizontal16,
+                                        child: Text('月'),
+                                      ),
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: HIGSpacing.s16),
+
+                            // Slider
+                            Expanded(
+                              child: _ComponentCard(
+                                title: 'Slider',
+                                description: '値を連続的に選択',
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: CupertinoSlider(
+                                        value: _sliderValue,
+                                        onChanged: (value) {
+                                          setState(() => _sliderValue = value);
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(height: HIGSpacing.s8),
+                                    Text(
+                                      '${(_sliderValue * 100).round()}%',
+                                      style: HIGTextStyles.body.copyWith(
+                                        color: HIGColors.primary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: HIGSpacing.s16),
+
+                      // Center Column
+                      Expanded(
+                        child: Column(
+                          children: [
+                            // Navigation Bar
+                            Expanded(
+                              child: _ComponentCard(
+                                title: 'Navigation Bar',
+                                description: '画面上部のナビゲーション',
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: HIGColors.separator,
+                                    ),
+                                    borderRadius: HIGRadius.all8,
+                                  ),
+                                  clipBehavior: Clip.hardEdge,
+                                  child: const CupertinoNavigationBar(
+                                    backgroundColor: HIGColors.surfaceBlur,
+                                    middle: Text('Title'),
+                                    leading: Icon(CupertinoIcons.back),
+                                    trailing: Icon(CupertinoIcons.share),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: HIGSpacing.s16),
+
+                            // Activity Indicator
+                            const Expanded(
+                              child: _ComponentCard(
+                                title: 'Activity Indicator',
+                                description: '処理の進行状況を表示',
+                                child: CupertinoActivityIndicator(
+                                  radius: 20,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: HIGSpacing.s16),
+
+                      // Right Column
+                      Expanded(
+                        child: Column(
+                          children: [
+                            // Primary Button / Toolbar
+                            Expanded(
+                              child: _ComponentCard(
+                                title: 'Primary Button',
+                                description: '主要なアクション',
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CupertinoButton.filled(
+                                      child: const Text('Create'),
+                                      onPressed: () {},
+                                    ),
+                                    const SizedBox(height: HIGSpacing.s16),
+                                    CupertinoButton(
+                                      child: const Text('Edit'),
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: HIGSpacing.s16),
+
+                            // Switch & Badge
+                            Expanded(
+                              child: _ComponentCard(
+                                title: 'Switch & Badge',
+                                description: 'トグルと通知バッジ',
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          '通知',
+                                          style: HIGTextStyles.body,
+                                        ),
+                                        const SizedBox(width: HIGSpacing.s16),
+                                        CupertinoSwitch(
+                                          value: _switchValue,
+                                          onChanged: (value) {
+                                            setState(
+                                              () => _switchValue = value,
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: HIGSpacing.s24),
+                                    Badge.count(
+                                      count: 3,
+                                      backgroundColor: HIGColors.error,
+                                      child: const Icon(
+                                        CupertinoIcons.bell,
+                                        size: 48,
+                                        color: HIGColors.primary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: HIGSpacing.s16),
+
+                            // Tab Bar
+                            Expanded(
+                              child: _ComponentCard(
+                                title: 'Tab Bar',
+                                description: '画面下部のナビゲーション',
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: HIGColors.separator,
+                                    ),
+                                    borderRadius: HIGRadius.all8,
+                                  ),
+                                  clipBehavior: Clip.hardEdge,
+                                  child: CupertinoTabBar(
+                                    currentIndex: _tabIndex,
+                                    onTap: (index) {
+                                      setState(() => _tabIndex = index);
+                                    },
+                                    items: const [
+                                      BottomNavigationBarItem(
+                                        icon: Icon(CupertinoIcons.home),
+                                        label: 'Home',
+                                      ),
+                                      BottomNavigationBarItem(
+                                        icon: Icon(CupertinoIcons.search),
+                                        label: 'Search',
+                                      ),
+                                      BottomNavigationBarItem(
+                                        icon: Icon(
+                                          CupertinoIcons.profile_circled,
+                                        ),
+                                        label: 'Profile',
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -368,7 +370,10 @@ class _SlideBodyState extends State<_SlideBody> {
   }
 
   Widget _buildFilterButton(
-      String label, bool isSelected, ValueChanged<bool> onSelected) {
+    String label,
+    bool isSelected,
+    ValueChanged<bool> onSelected,
+  ) {
     return GestureDetector(
       onTap: () => onSelected(!isSelected),
       child: Container(
@@ -417,45 +422,34 @@ class _ComponentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: HIGSpacing.all24,
-      decoration: BoxDecoration(
-        color: HIGColors.surface,
-        borderRadius: HIGRadius.all16,
-        boxShadow: [
-          BoxShadow(
-            color: HIGColors.onSurface.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-        border: Border.all(
-          color: HIGColors.separator.withOpacity(0.2),
-          width: 0.5,
-        ),
+    return LiquidGlass(
+      shape: const LiquidRoundedRectangle(
+        borderRadius: 16,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: HIGTextStyles.subheading.copyWith(
-              color: HIGColors.label,
-              fontSize: 20,
+      child: Padding(
+        padding: HIGSpacing.all24,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: HIGTextStyles.subheading.copyWith(
+                color: HIGColors.label,
+                fontSize: 20,
+              ),
             ),
-          ),
-          const SizedBox(height: HIGSpacing.s4),
-          Text(
-            description,
-            style: HIGTextStyles.captionLabelSecondary.copyWith(fontSize: 12),
-          ),
-          const SizedBox(height: HIGSpacing.s16),
-          Expanded(
-            child: Center(child: child),
-          ),
-        ],
+            const SizedBox(height: HIGSpacing.s4),
+            Text(
+              description,
+              style: HIGTextStyles.captionLabelSecondary.copyWith(fontSize: 12),
+            ),
+            const SizedBox(height: HIGSpacing.s16),
+            Expanded(
+              child: Center(child: child),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
