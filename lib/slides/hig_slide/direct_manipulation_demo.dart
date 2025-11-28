@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:material_vs_hig/slides/hig_slide/hig_slide.dart';
 
 class DirectManipulationDemo extends StatefulWidget {
   const DirectManipulationDemo({super.key});
