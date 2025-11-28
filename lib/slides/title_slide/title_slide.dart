@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
-import 'package:material_vs_hig/tokens/colors/material_colors.dart';
 import 'package:material_vs_hig/tokens/colors/hig_colors.dart';
-import 'package:material_vs_hig/tokens/text_styles/material_text_styles.dart';
-import 'package:material_vs_hig/tokens/text_styles/hig_text_styles.dart';
+import 'package:material_vs_hig/tokens/colors/material_colors.dart';
 import 'package:material_vs_hig/tokens/spacing/material_spacing.dart';
+import 'package:material_vs_hig/tokens/text_styles/hig_text_styles.dart';
+import 'package:material_vs_hig/tokens/text_styles/material_text_styles.dart';
 
 class TitleSlide extends FlutterDeckSlideWidget {
   const TitleSlide({super.key});
@@ -33,7 +33,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                             color: MaterialColors.primary,
                           ),
                         ),
-                        SizedBox(height: MaterialSpacing.s16),
+                        const SizedBox(height: MaterialSpacing.s16),
                         Text(
                           'Expressive',
                           style: MaterialTextStyles.subheading.copyWith(
@@ -43,7 +43,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: MaterialSpacing.s48),
+                  const SizedBox(width: MaterialSpacing.s48),
                   // VS (中央に配置)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -56,14 +56,14 @@ class TitleSlide extends FlutterDeckSlideWidget {
                           borderRadius: BorderRadius.circular(2),
                         ),
                       ),
-                      SizedBox(height: MaterialSpacing.s16),
+                      const SizedBox(height: MaterialSpacing.s16),
                       Text(
                         'vs',
                         style: MaterialTextStyles.heading.copyWith(
                           color: MaterialColors.onSurface,
                         ),
                       ),
-                      SizedBox(height: MaterialSpacing.s16),
+                      const SizedBox(height: MaterialSpacing.s16),
                       Container(
                         width: 4,
                         height: 80,
@@ -74,7 +74,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                       ),
                     ],
                   ),
-                  SizedBox(width: MaterialSpacing.s48),
+                  const SizedBox(width: MaterialSpacing.s48),
                   // Human Interface Guidelines
                   Expanded(
                     child: Column(
@@ -87,7 +87,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                             color: HIGColors.primary,
                           ),
                         ),
-                        SizedBox(height: MaterialSpacing.s16),
+                        const SizedBox(height: MaterialSpacing.s16),
                         Text(
                           'Liquid Glass',
                           style: HIGTextStyles.subheading.copyWith(
@@ -99,7 +99,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                   ),
                 ],
               ),
-              SizedBox(height: MaterialSpacing.s64),
+              const SizedBox(height: MaterialSpacing.s64),
               // サブタイトル
               Text(
                 'デザイン思想の違い',
@@ -107,7 +107,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                   color: MaterialColors.onSurface,
                 ),
               ),
-              SizedBox(height: MaterialSpacing.s32),
+              const SizedBox(height: MaterialSpacing.s32),
               // 説明文
               Container(
                 padding: MaterialSpacing.all24,
@@ -123,15 +123,9 @@ class TitleSlide extends FlutterDeckSlideWidget {
                         color: MaterialColors.onSurfaceVariant,
                       ),
                     ),
-                    SizedBox(height: MaterialSpacing.s8),
+                    const SizedBox(height: MaterialSpacing.s8),
                     Text(
-                      'Material Design 3 Expressive と Human Interface Guidelines (Liquid Glass) の',
-                      style: MaterialTextStyles.caption.copyWith(
-                        color: MaterialColors.onSurfaceVariant,
-                      ),
-                    ),
-                    Text(
-                      'デザイントークンとUIの違いを比較します',
+                      '''※注意事項：それぞれのデザインシステムにおけるデザインのスタイルガイドについては説明をしません。\nあくまでデザイン思想の違いのみ説明します。''',
                       style: MaterialTextStyles.caption.copyWith(
                         color: MaterialColors.onSurfaceVariant,
                       ),
